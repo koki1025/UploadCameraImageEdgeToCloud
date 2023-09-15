@@ -1,0 +1,26 @@
+# FROM resin/raspberrypi3-debian:stretch
+FROM python:3.7-slim
+
+RUN [ "cross-build-start" ]
+
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libboost-python1.62.0 python3-pip libpython3-dev && \
+    rm -rf /var/lib/apt/lists/* 
+
+
+RUN pip3 install --upgrade pip 
+RUN pip install --upgrade setuptools 
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
+
+
+RUN [ "cross-build-end" ]
+
+COPY . .
+
+# Expose the port
+EXPOSE 80
+
+ENTRYPOINT [ "python3", "./main.py" ]

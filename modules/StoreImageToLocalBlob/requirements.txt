@@ -1,0 +1,4 @@
+azure-iothub-device-client
+flask
+azure-storage-blob
+azure-mgmt-storage
